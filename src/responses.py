@@ -118,3 +118,40 @@ def format_available_vehicles(context):
         )
 
     return "\n".join(lines)
+
+def format_delivery_status(pedido_id, delivery):
+    """
+    Formata o status de uma entrega.
+
+    Esta função apenas apresenta os dados oficiais
+    da entrega recebida.
+    """
+
+    if delivery is None:
+        return (
+            "FATO\n\n"
+            f"Não há registro de entrega para "
+            f"{pedido_id} nos dados da operação.\n\n"
+            "Portanto, não é possível afirmar "
+            "que o pedido esteja em trânsito, "
+            "aguardando coleta ou entregue."
+        )
+
+    result = (
+        "FATO\n\n"
+        f"{pedido_id}: {delivery['status']}."
+    )
+
+    if delivery.get("veiculo_id"):
+        result += (
+            f"\nVeículo associado: "
+            f"{delivery['veiculo_id']}."
+        )
+
+    if delivery.get("previsao_entrega"):
+        result += (
+            f"\nPrevisão de entrega: "
+            f"{delivery['previsao_entrega']}."
+        )
+
+    return result
