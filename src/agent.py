@@ -20,6 +20,7 @@ from .responses import (
     format_available_vehicles,
     format_deadline,
     format_delivery_status,
+    format_in_transit_orders,
     format_stock_alerts,
     format_vehicle_allocation,
     format_vehicle_recommendations,
@@ -333,24 +334,7 @@ def deterministic_answer(question, context):
             if delivery.get("status") == "em_transito"
         ]
 
-        if not deliveries:
-            return (
-                "FATO\n\n"
-                "Não há pedidos em trânsito nos dados oficiais."
-            )
-
-        lines = [
-            "FATO",
-            "",
-            "Pedidos em trânsito:",
-        ]
-
-        for delivery in deliveries:
-            lines.append(
-                f"- {delivery['pedido_id']}"
-            )
-
-        return "\n".join(lines)
+        return format_in_transit_orders(deliveries)
 
     # =========================================================
     # PEDIDOS SEM VEÍCULO ALOCADO
