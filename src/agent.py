@@ -16,6 +16,7 @@ from .tools import (
     consultar_entregas,
 )
 
+from .responses import format_vehicle_recommendations
 
 SYSTEM_PROMPT = """
 Você é um analista de logística.
@@ -357,70 +358,23 @@ def deterministic_answer(question, context):
             "Esta é uma recomendação. "
             "Não representa uma alocação confirmada."
         )
-        # =========================================================
+    # =========================================================
     # RECOMENDAÇÃO DE VEÍCULO PARA CADA PEDIDO
     # =========================================================
 
     if (
-        "veículo" in q
-        or "veiculo" in q
-    ) and (
-        "cada pedido" in q
-        or "todos os pedidos" in q
-        or "para cada pedido" in q
-    ) and (
-        "recomenda" in q
-        or "recomendado" in q
-    ):
-        lines = [
-            "RECOMENDAÇÕES",
-            "",
-        ]
-
-        for order in context["PEDIDOS"]:
-            pedido_id = order["id"]
-
-            recommended_id = context[
-                "VEICULOS_RECOMENDADOS"
-            ].get(pedido_id)
-
-            if recommended_id is None:
-                lines.append(
-                    f"- {pedido_id}: "
-                    "não há veículo recomendado."
-                )
-                continue
-
-            vehicle = _find_vehicle(
-                context,
-                recommended_id,
-            )
-
-            if vehicle is None:
-                lines.append(
-                    f"- {pedido_id}: "
-                    f"{recommended_id} "
-                    "(veículo recomendado)."
-                )
-                continue
-
-            lines.append(
-                f"- {pedido_id}: "
-                f"{vehicle['id']} "
-                f"({vehicle['tipo']}, "
-                f"{vehicle['capacidade_kg']} kg, "
-                f"{vehicle['capacidade_m3']} m³)"
-            )
-
-        lines.extend(
-            [
-                "",
-                "Estas são recomendações. "
-                "Não representam alocações confirmadas.",
-            ]
+        ("veículo" in q or "veiculo" in q)
+        and (
+            "cada pedido" in q
+            or "todos os pedidos" in q
+            or "para cada pedido" in q
         )
-
-        return "\n".join(lines)
+        and (
+            "recomenda" in q
+            or "recomendado" in q
+        )
+    ):
+        return format_vehicle_recommendations(context)
     # =========================================================
     # PEDIDOS EM TRÂNSITO
     # =========================================================
