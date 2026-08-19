@@ -1,0 +1,32 @@
+[
+  {
+    "id": "PED-001",
+    "cliente": "Cliente A",
+    "origem": "São Paulo",
+    "destino": "Campinas",
+    "peso_kg": 450,
+    "volume_m3": 2.4,
+    "prioridade": "alta",
+    "prazo": "2026-08-19"
+  },
+  {
+    "id": "PED-002",
+    "cliente": "Cliente B",
+    "origem": "São Paulo",
+    "destino": "Santos",
+    "peso_kg": 800,
+    "volume_m3": 4.1,
+    "prioridade": "normal",
+    "prazo": "2026-08-20"
+  },
+  {
+    "id": "PED-003",
+    "cliente": "Cliente C",
+    "origem": "Campinas",
+    "destino": "Jundiaí",
+    "peso_kg": 250,
+    "volume_m3": 1.2,
+    "prioridade": "alta",
+    "prazo": "2026-08-19"
+  }
+]

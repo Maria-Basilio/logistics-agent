@@ -1,0 +1,14 @@
+[
+  {
+    "pedido_id": "PED-001",
+    "status": "em_transito",
+    "previsao_entrega": "2026-08-19",
+    "veiculo_id": "VEI-001"
+  },
+  {
+    "pedido_id": "PED-002",
+    "status": "aguardando_coleta",
+    "previsao_entrega": null,
+    "veiculo_id": null
+  }
+]

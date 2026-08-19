@@ -1,0 +1,26 @@
+[
+  {
+    "id": "VEI-001",
+    "tipo": "caminhão",
+    "capacidade_kg": 5000,
+    "capacidade_m3": 25,
+    "disponivel": true,
+    "origem": "São Paulo"
+  },
+  {
+    "id": "VEI-002",
+    "tipo": "van",
+    "capacidade_kg": 1200,
+    "capacidade_m3": 8,
+    "disponivel": true,
+    "origem": "Campinas"
+  },
+  {
+    "id": "VEI-003",
+    "tipo": "caminhão",
+    "capacidade_kg": 3000,
+    "capacidade_m3": 15,
+    "disponivel": false,
+    "origem": "São Paulo"
+  }
+]

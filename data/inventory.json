@@ -1,0 +1,20 @@
+[
+  {
+    "produto": "Produto A",
+    "estoque": 120,
+    "estoque_minimo": 50,
+    "local": "São Paulo"
+  },
+  {
+    "produto": "Produto B",
+    "estoque": 35,
+    "estoque_minimo": 40,
+    "local": "Campinas"
+  },
+  {
+    "produto": "Produto C",
+    "estoque": 200,
+    "estoque_minimo": 80,
+    "local": "Santos"
+  }
+]
