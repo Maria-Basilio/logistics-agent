@@ -17,6 +17,7 @@ from .tools import (
 )
 
 from .responses import (
+    format_available_vehicles,
     format_stock_alerts,
     format_vehicle_recommendations,
 )
@@ -136,10 +137,6 @@ def deterministic_answer(question, context):
     # ESTOQUE
     # =========================================================
 
-        # =========================================================
-    # ESTOQUE
-    # =========================================================
-
     if "estoque" in q and any(
         word in q
         for word in [
@@ -163,24 +160,7 @@ def deterministic_answer(question, context):
             or "disponiveis" in q
         )
     ):
-        vehicles = [
-            vehicle
-            for vehicle in context["VEICULOS"]
-            if vehicle.get("disponivel", False)
-        ]
-
-        lines = ["VEÍCULOS DISPONÍVEIS", ""]
-
-        for vehicle in vehicles:
-            lines.append(
-                f"- {vehicle['id']} "
-                f"({vehicle['tipo']}): "
-                f"{vehicle['capacidade_kg']} kg, "
-                f"{vehicle['capacidade_m3']} m³, "
-                f"origem: {vehicle['origem']}"
-            )
-
-        return "\n".join(lines)
+        return format_available_vehicles(context)
 
     # =========================================================
     # IDENTIFICA PEDIDO

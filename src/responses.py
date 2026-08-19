@@ -88,3 +88,33 @@ def format_stock_alerts(context):
         )
 
     return "\n".join(lines)
+
+def format_available_vehicles(context):
+    """
+    Formata a lista de veículos atualmente disponíveis.
+
+    Esta função apenas apresenta os veículos marcados
+    como disponíveis nos dados oficiais.
+    """
+
+    vehicles = [
+        vehicle
+        for vehicle in context["VEICULOS"]
+        if vehicle.get("disponivel", False)
+    ]
+
+    lines = [
+        "VEÍCULOS DISPONÍVEIS",
+        "",
+    ]
+
+    for vehicle in vehicles:
+        lines.append(
+            f"- {vehicle['id']} "
+            f"({vehicle['tipo']}): "
+            f"{vehicle['capacidade_kg']} kg, "
+            f"{vehicle['capacidade_m3']} m³, "
+            f"origem: {vehicle['origem']}"
+        )
+
+    return "\n".join(lines)
