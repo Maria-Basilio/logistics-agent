@@ -57,3 +57,34 @@ def format_vehicle_recommendations(context):
     )
 
     return "\n".join(lines)
+
+def format_stock_alerts(context):
+    """
+    Formata os alertas de estoque.
+
+    Esta função apenas apresenta os alertas
+    já calculados pelos dados da operação.
+    """
+
+    alerts = context["ALERTAS_ESTOQUE"]
+
+    if not alerts:
+        return (
+            "ESTOQUE\n\n"
+            "Não existem produtos abaixo do estoque mínimo."
+        )
+
+    lines = [
+        "ALERTAS DE ESTOQUE",
+        "",
+    ]
+
+    for item in alerts:
+        lines.append(
+            f"- {item['produto']}: "
+            f"{item['estoque']} unidades, "
+            f"mínimo {item['estoque_minimo']} "
+            f"({item['local']})"
+        )
+
+    return "\n".join(lines)

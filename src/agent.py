@@ -16,7 +16,10 @@ from .tools import (
     consultar_entregas,
 )
 
-from .responses import format_vehicle_recommendations
+from .responses import (
+    format_stock_alerts,
+    format_vehicle_recommendations,
+)
 
 SYSTEM_PROMPT = """
 Você é um analista de logística.
@@ -133,6 +136,10 @@ def deterministic_answer(question, context):
     # ESTOQUE
     # =========================================================
 
+        # =========================================================
+    # ESTOQUE
+    # =========================================================
+
     if "estoque" in q and any(
         word in q
         for word in [
@@ -143,25 +150,7 @@ def deterministic_answer(question, context):
             "minimo",
         ]
     ):
-        alerts = context["ALERTAS_ESTOQUE"]
-
-        if not alerts:
-            return (
-                "ESTOQUE\n\n"
-                "Não existem produtos abaixo do estoque mínimo."
-            )
-
-        lines = ["ALERTAS DE ESTOQUE", ""]
-
-        for item in alerts:
-            lines.append(
-                f"- {item['produto']}: "
-                f"{item['estoque']} unidades, "
-                f"mínimo {item['estoque_minimo']} "
-                f"({item['local']})"
-            )
-
-        return "\n".join(lines)
+        return format_stock_alerts(context)
 
     # =========================================================
     # VEÍCULOS DISPONÍVEIS
