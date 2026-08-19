@@ -93,9 +93,12 @@ def identify_stock_alerts(inventory):
     ]
 
 
-def calculate_deadline_status(order):
+def calculate_deadline_status(order, reference_date=None):
     """
     Analisa a proximidade do prazo de entrega.
+
+    reference_date permite tornar o cálculo determinístico
+    nos testes. Quando não informado, usa a data atual.
     """
 
     prazo = order.get("prazo")
@@ -121,7 +124,7 @@ def calculate_deadline_status(order):
             "status": "prazo_invalido",
         }
 
-    today = date.today()
+    today = reference_date or date.today()
     days_remaining = (deadline - today).days
 
     if days_remaining < 0:
@@ -448,3 +451,50 @@ def generate_logistics_plan(
 
         "consolidacao": consolidation,
     }
+
+from datetime import date
+
+
+def test_prazo_vence_hoje_com_data_de_referencia():
+    order = {
+        "id": "PED-TESTE",
+        "prazo": "2026-08-19",
+    }
+
+    result = calculate_deadline_status(
+        order,
+        reference_date=date(2026, 8, 19),
+    )
+
+    assert result["dias_restantes"] == 0
+    assert result["status"] == "vence_hoje"
+
+
+def test_prazo_atrasado_com_data_de_referencia():
+    order = {
+        "id": "PED-TESTE",
+        "prazo": "2026-08-18",
+    }
+
+    result = calculate_deadline_status(
+        order,
+        reference_date=date(2026, 8, 19),
+    )
+
+    assert result["dias_restantes"] == -1
+    assert result["status"] == "atrasado"
+
+
+def test_prazo_proximo_com_data_de_referencia():
+    order = {
+        "id": "PED-TESTE",
+        "prazo": "2026-08-20",
+    }
+
+    result = calculate_deadline_status(
+        order,
+        reference_date=date(2026, 8, 19),
+    )
+
+    assert result["dias_restantes"] == 1
+    assert result["status"] == "proximo_do_prazo"
