@@ -18,6 +18,7 @@ from .tools import (
 
 from .responses import (
     format_available_vehicles,
+    format_deadline,
     format_delivery_status,
     format_stock_alerts,
     format_vehicle_recommendations,
@@ -184,12 +185,9 @@ def deterministic_answer(question, context):
             pedido_id,
         )
 
-        if order is None:
-            return f"O pedido {pedido_id} não foi encontrado."
-
-        return (
-            "FATO\n\n"
-            f"O prazo do {pedido_id} é {order['prazo']}."
+        return format_deadline(
+            pedido_id,
+            order,
         )
 
     # =========================================================

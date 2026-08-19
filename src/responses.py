@@ -155,3 +155,21 @@ def format_delivery_status(pedido_id, delivery):
         )
 
     return result
+
+def format_deadline(pedido_id, order):
+    """
+    Formata o prazo de um pedido.
+
+    Esta função apenas apresenta o prazo
+    registrado nos dados oficiais.
+    """
+
+    if order is None:
+        return (
+            f"O pedido {pedido_id} não foi encontrado."
+        )
+
+    return (
+        "FATO\n\n"
+        f"O prazo do {pedido_id} é {order['prazo']}."
+    )
