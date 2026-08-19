@@ -1,24 +1,18 @@
-# Ambiente virtual
 .venv/
 venv/
 env/
 
-# Python
 __pycache__/
 *.py[cod]
 *.pyo
 
-# Testes
 .pytest_cache/
 .coverage
 htmlcov/
 
-# IDE
 .vscode/
 .idea/
 
-# macOS
 .DS_Store
 
-# Variáveis de ambiente
 .env
