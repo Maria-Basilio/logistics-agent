@@ -173,3 +173,25 @@ def format_deadline(pedido_id, order):
         "FATO\n\n"
         f"O prazo do {pedido_id} é {order['prazo']}."
     )
+
+def format_vehicle_allocation(pedido_id, allocation):
+    """
+    Formata a alocação confirmada de um pedido.
+
+    Esta função apenas apresenta dados oficiais
+    de uma alocação existente.
+    """
+
+    if allocation is None:
+        return (
+            "FATO\n\n"
+            f"Não existe alocação confirmada para "
+            f"{pedido_id} nos dados da operação."
+        )
+
+    return (
+        "FATO\n\n"
+        f"{pedido_id} possui alocação confirmada "
+        f"com o veículo {allocation['veiculo_id']}.\n"
+        f"Status: {allocation['status']}."
+    )

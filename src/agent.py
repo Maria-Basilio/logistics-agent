@@ -21,6 +21,7 @@ from .responses import (
     format_deadline,
     format_delivery_status,
     format_stock_alerts,
+    format_vehicle_allocation,
     format_vehicle_recommendations,
 )
 
@@ -194,19 +195,15 @@ def deterministic_answer(question, context):
     # PERGUNTA SOBRE VEÍCULO ALOCADO
     # =========================================================
 
-    if pedido_id and any(
-        phrase in q
-        for phrase in [
-            "veículo alocado",
-            "veiculo alocado",
-            "veículo associado",
-            "veiculo associado",
-            "possui veículo",
-            "possui veiculo",
-            "tem veículo",
-            "tem veiculo",
-        ]
-    ):
+    if pedido_id and (
+    "veículo" in q
+    or "veiculo" in q
+) and (
+    "alocado" in q
+    or "associado" in q
+    or "possui" in q
+    or "tem" in q
+):
         allocation = _confirmed_allocation(
             context,
             pedido_id,
