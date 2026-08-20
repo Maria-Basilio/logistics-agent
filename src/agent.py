@@ -22,6 +22,7 @@ from .responses import (
     format_delivery_status,
     format_in_transit_orders,
     format_stock_alerts,
+    format_unallocated_orders,
     format_vehicle_allocation,
     format_vehicle_recommendations,
 )
@@ -358,22 +359,7 @@ def deterministic_answer(question, context):
             if allocation is None:
                 result.append(order["id"])
 
-        if not result:
-            return (
-                "FATO\n\n"
-                "Todos os pedidos possuem uma alocação confirmada."
-            )
-
-        lines = [
-            "FATO",
-            "",
-            "Pedidos sem veículo alocado:",
-        ]
-
-        for pedido in result:
-            lines.append(f"- {pedido}")
-
-        return "\n".join(lines)
+        return format_unallocated_orders(result)
 
     # =========================================================
     # ALERTAS DA OPERAÇÃO

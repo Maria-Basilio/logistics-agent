@@ -195,7 +195,23 @@ def format_vehicle_allocation(pedido_id, allocation):
         f"com o veículo {allocation['veiculo_id']}.\n"
         f"Status: {allocation['status']}."
     )
+def format_unallocated_orders(order_ids):
+    if not order_ids:
+        return (
+            "FATO\n\n"
+            "Todos os pedidos possuem uma alocação confirmada."
+        )
 
+    lines = [
+        "FATO",
+        "",
+        "Pedidos sem veículo alocado:",
+    ]
+
+    for pedido_id in order_ids:
+        lines.append(f"- {pedido_id}")
+
+    return "\n".join(lines)
 def format_in_transit_orders(deliveries):
     """
     Formata os pedidos que estão em trânsito.
