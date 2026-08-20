@@ -238,3 +238,39 @@ def format_in_transit_orders(deliveries):
         )
 
     return "\n".join(lines)
+
+def format_operation_alerts(context):
+    lines = ["ALERTAS DA OPERAÇÃO", ""]
+
+    alerts_found = False
+
+    for item in context["ALERTAS_ESTOQUE"]:
+        alerts_found = True
+        lines.append(
+            f"- Estoque: {item['produto']} "
+            f"com {item['estoque']} unidades; "
+            f"mínimo {item['estoque_minimo']} "
+            f"({item['local']})"
+        )
+
+    for item in context["PLANO_LOGISTICO"].get(
+        "prazos",
+        [],
+    ):
+        if item.get("status") in {
+            "vence_hoje",
+            "atrasado",
+        }:
+            alerts_found = True
+            lines.append(
+                f"- Prazo: {item['pedido_id']} "
+                f"({item['status']})"
+            )
+
+    if not alerts_found:
+        return (
+            "ALERTAS DA OPERAÇÃO\n\n"
+            "Não existem alertas registrados."
+        )
+
+    return "\n".join(lines)
