@@ -274,3 +274,31 @@ def format_operation_alerts(context):
         )
 
     return "\n".join(lines)
+
+def format_consolidation(opportunities):
+    if not opportunities:
+        return (
+            "CONSOLIDAÇÃO\n\n"
+            "Não há oportunidades de consolidação "
+            "entre os pedidos atuais."
+        )
+
+    lines = [
+        "CONSOLIDAÇÃO",
+        "",
+        "Oportunidades encontradas:",
+    ]
+
+    for item in opportunities:
+        lines.append(
+            f"- Pedidos: "
+            f"{', '.join(item['pedidos'])}; "
+            f"origem: {item['origem']}; "
+            f"destino: {item['destino']}; "
+            f"peso total: {item['peso_total_kg']} kg; "
+            f"volume total: {item['volume_total_m3']} m³; "
+            f"veículos adequados: "
+            f"{', '.join(item['veiculos_adequados'])}"
+        )
+
+    return "\n".join(lines)
